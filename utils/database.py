@@ -1,7 +1,10 @@
 import aiosqlite
 import logging
 
-DB_NAME = "database/kazakh_bot.db"
+import os
+# Это создаст базу в корневой папке бота на сервере
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_NAME = os.path.join(os.path.dirname(BASE_DIR), "database.db")
 
 async def create_tables():
     async with aiosqlite.connect(DB_NAME) as db:
@@ -63,4 +66,5 @@ async def update_lesson_audio(lesson_id: int, file_id: str):
 async def get_all_active_users():
     async with aiosqlite.connect(DB_NAME) as db:
         async with db.execute("SELECT user_id FROM users WHERE active = 1") as cursor:
+
             return await cursor.fetchall()
