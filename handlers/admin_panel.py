@@ -9,7 +9,7 @@ from utils.database import update_lesson_audio
 router = Router()
 
 # Получаем ID админов из.env
-ADMIN_IDS =
+ADMIN_IDS =8411632884
 
 class AudioUpload(StatesGroup):
     waiting_for_lesson_id = State()
@@ -51,4 +51,5 @@ async def process_audio_file(message: Message, state: FSMContext):
     await update_lesson_audio(lesson_id, file_id)
     
     await message.answer(f"✅ Аудио успешно прикреплено к уроку {lesson_id}!")
+
     await state.clear()
