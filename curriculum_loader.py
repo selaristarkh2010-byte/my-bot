@@ -4,7 +4,7 @@ async def load_curriculum_if_empty():
     async with aiosqlite.connect(DB_NAME) as db:
         cursor = await db.execute("SELECT count(*) FROM lessons")
         count = await cursor.fetchone()
-        if count > 0:
+        if count[0] > 0:
             return
 
         lessons = [
@@ -18,4 +18,5 @@ async def load_curriculum_if_empty():
             "INSERT INTO lessons (id, title, content, audio_file_id, exercise_question, exercise_answer) VALUES (?,?,?,?,?,?)",
             lessons
         )
+
         await db.commit()
